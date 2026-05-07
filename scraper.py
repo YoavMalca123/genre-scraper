@@ -9,6 +9,14 @@ from types_lib.constants import *
 from types_lib.scraper_types import ScraperInputType, ScraperResponse
 
 def is_valid_match(input_name: str, found_name: str, threshold: int = 60) -> bool:
+    """
+    Checks how close an app is to actually being what is found, used due to there being apps
+    not in app store and then they just give trash found names
+    :param input_name: app name we found on the phone and are looking for
+    :param found_name: name found in actuall app store
+    :param threshold: accurassy
+    :return: if its actually on the app store or not
+    """
     return fuzz.token_set_ratio(input_name.lower(), found_name.lower()) >= threshold
 
 def fetch_app(app_name: str) -> ScraperResponse:
@@ -25,7 +33,7 @@ def fetch_app(app_name: str) -> ScraperResponse:
             )
             return unknown_result
 
-        best_match = None
+        best_match = None #best match for an app from the 5 search finds
 
         for app in search_results:
             title = app.get(TITLE)
