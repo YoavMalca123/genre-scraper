@@ -4,12 +4,12 @@ from concurrent.futures import ThreadPoolExecutor, as_completed
 from google_play_scraper import search
 from rapidfuzz import fuzz
 
+from distraction_levels import get_category, get_category_distraction
 from types_lib.constants import *
 from types_lib.scraper_types import ScraperInputType, ScraperResponse
 
 def is_valid_match(input_name: str, found_name: str, threshold: int = 60) -> bool:
     return fuzz.token_set_ratio(input_name.lower(), found_name.lower()) >= threshold
-
 
 def fetch_app(app_name: str) -> ScraperResponse:
     try:
@@ -28,7 +28,7 @@ def fetch_app(app_name: str) -> ScraperResponse:
         best_match = None
 
         for app in search_results:
-            title = app.get(TITLE, "")
+            title = app.get(TITLE)
             if is_valid_match(app_name, title):
                 best_match = app
                 break
@@ -41,11 +41,18 @@ def fetch_app(app_name: str) -> ScraperResponse:
             )
             return unknown_result
 
+        genre = best_match.get(GENRE)
+        category = get_category(genre)
+
+        distraction_value = get_category_distraction(genre)
+        genre_id = best_match.get(GENRE_ID)
         good_result = ScraperResponse(
             app=app_name,
             status=OK,
-            genre=best_match.get(GENRE),
-            genre_id=best_match.get(GENRE_ID),
+            genre=genre,
+            genre_id=genre_id,
+            category=category,
+            distraction_value=distraction_value
         )
         return good_result
 
