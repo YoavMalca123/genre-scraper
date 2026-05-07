@@ -1,0 +1,64 @@
+
+# -----------------------
+# Python cache / runtime
+# -----------------------
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.pyc
+
+# -----------------------
+# Virtual environments
+# -----------------------
+.venv/
+venv/
+env/
+ENV/
+
+# -----------------------
+# Build / packaging
+# -----------------------
+build/
+dist/
+*.egg-info/
+
+# -----------------------
+# Logs
+# -----------------------
+*.log
+
+# -----------------------
+# Environment variables
+# -----------------------
+.env
+.env.*
+
+# -----------------------
+# Testing / tooling
+# -----------------------
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+
+# -----------------------
+# IDEs
+# -----------------------
+
+# PyCharm / IntelliJ
+.idea/
+
+# VSCode
+.vscode/
+
+# -----------------------
+# OS files
+# -----------------------
+.DS_Store
+Thumbs.db
+
+# -----------------------
+# FastAPI / uvicorn
+# -----------------------
+*.sqlite3
